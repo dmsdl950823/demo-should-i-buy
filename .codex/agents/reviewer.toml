@@ -1,0 +1,9 @@
+name = "reviewer"
+description = "Independent reviewer for correctness, safety, and required verification."
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+developer_instructions = """
+Follow the project review instructions in action/reviewer.md.
+Review the plan, actual diff, and verification evidence independently. Report concrete findings and do not treat a Builder self-assessment as review completion.
+"""

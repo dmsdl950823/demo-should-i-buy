@@ -78,6 +78,14 @@
 ## 리뷰 기록
 단계별로 리뷰 대상 commit 또는 diff 범위, 리뷰어, 독립/자체 리뷰 여부, 실행 검사와 미실행 사유를 기록한다.
 
+### 실행 전 역할별 모델 설정 (2026-09-22)
+
+범위: `.codex/agents/{plan,builder,reviewer}.toml`, `TODO.md`, `action/plan.md`, `action/builder.md`.
+
+독립 Reviewer가 R1 (`reviewer.toml`에 `sandbox_mode = "read-only"` 추가)과 R2 (TOML 생성·명시 spawn 검증과 파일 기반 자동 선택 미검증을 정확히 기록)를 요청했다. 수정 후 필수 TOML 필드, action 문서 참조, 모델·추론 수준과 기록을 재검토했다.
+
+판정: **PASS**. Plan `gpt-6-astra`/`high`, Builder `gpt-5.6-terra`/`medium`, Reviewer `gpt-5.6-terra`/`high`의 명시 spawn 적용은 확인됐다. 명시 spawn 또는 런타임 설정이 TOML 기반 자동 선택을 덮어쓸 수 있으므로, 파일 기반 자동 선택은 검증 완료로 주장하지 않는다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.

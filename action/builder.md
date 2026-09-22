@@ -91,6 +91,7 @@
 
 | 단계 | 수정 파일·핵심 코드 | 계획과의 차이 | 검증 명령·결과 | 실제 호출 여부 | 막힘·다음 작업 |
 |---|---|---|---|---|---|
+| 실행 전 역할별 모델 설정 | `.codex/agents/{plan,builder,reviewer}.toml` | project-scoped TOML 역할 설정을 추가했다. Reviewer는 R1에 따라 `sandbox_mode = "read-only"`를 지정했다. | 세 파일의 필수 TOML 필드·모델·추론 수준·action 문서 참조를 확인했고, TOML 파싱 및 명시 spawn으로 Plan `gpt-6-astra`/`high`, Builder `gpt-5.6-terra`/`medium`, Reviewer `gpt-5.6-terra`/`high`를 확인했다. 명시 spawn 또는 런타임 설정이 파일 기반 자동 선택을 덮어쓸 수 있으므로 자동 선택은 미검증이다. | 해당 없음 | R1/R2 수정의 독립 재리뷰 PASS; 00 Gateway 검증과 분리. |
 | 00 | 기존 직접 호출 스크립트만 준비됨 | Gateway 전환 필요 | Gateway 검증 미실행 | 없음 | Gateway 인증 필요 |
 
 리뷰 수정은 지적 ID, 수정 파일, 수정 내용, 재검증 결과를 추가한다. 키와 민감 정보는 기록하지 않는다. 단계별 변경을 커밋할 때 해당 단계의 파일만 staging하고 커밋 SHA와 검사 결과를 구현 기록에 추가한다.
