@@ -2,7 +2,7 @@
 
 [plan.md](plan.md)와 [builder.md](builder.md)를 기준으로 실제 코드·diff·검증 결과를 확인한다. 문서 작성만으로 리뷰 통과를 선언하지 않는다. 가능하면 구현자와 다른 에이전트가 검토하고, 자체 리뷰라면 명시한다.
 
-현재 판정: **NOT_REVIEWED**. 앱 구현과 Gateway 전환 코드는 아직 리뷰하지 않았다.
+현재 판정: **00 PASS / 앱 단계 NOT_REVIEWED**. Gateway 전환은 독립 리뷰를 통과했고, 앱 구현은 아직 리뷰하지 않았다.
 
 ## 00-preflight-and-jev
 
@@ -85,6 +85,14 @@
 독립 Reviewer가 R1 (`reviewer.toml`에 `sandbox_mode = "read-only"` 추가)과 R2 (TOML 생성·명시 spawn 검증과 파일 기반 자동 선택 미검증을 정확히 기록)를 요청했다. 수정 후 필수 TOML 필드, action 문서 참조, 모델·추론 수준과 기록을 재검토했다.
 
 판정: **PASS**. Plan `gpt-6-astra`/`high`, Builder `gpt-5.6-terra`/`medium`, Reviewer `gpt-5.6-terra`/`high`의 명시 spawn 적용은 확인됐다. 명시 spawn 또는 런타임 설정이 TOML 기반 자동 선택을 덮어쓸 수 있으므로, 파일 기반 자동 선택은 검증 완료로 주장하지 않는다.
+
+### 00-preflight-and-jev (2026-09-22)
+
+범위: `scripts/smoke-jev.mjs`, `.env.example`, `TODO.md`, `action/plan.md`, `action/builder.md`.
+
+Builder 검증 근거: 문법 검사, 키 누락 시 네트워크 전 종료, mocked HTTP 403의 안전한 customer-verification/결제 수단 안내, 실제 Gateway HTTP 200 두 건, `git diff --check`. 실제 응답은 `typesafe-ai/jev`에서 `SKIP`/confidence `0.69`, `SKIP`/confidence `0.62`였고, 두 번째 probabilities는 `SKIP 0.74`, `WAIT 0.25`, `BUY 0.01`이었다.
+
+판정: **PASS**. 독립 Reviewer는 Gateway endpoint·서버 키 이름·20초 timeout·응답 검증·403 안내가 provider 원문 또는 키를 노출하지 않는지와 실행 기록의 실제 증거 일치를 확인했다. 앱 단계는 계속 **NOT_REVIEWED**다.
 
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 

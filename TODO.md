@@ -1,9 +1,9 @@
 # 할 일
 
-현재 막힘: Vercel AI Gateway 인증 및 실제 호출 검증 대기. TypeSafe 직접 연결은 일시 보류.
+현재 상태: 역할별 모델 설정과 00 Gateway 실제 호출 검증은 완료했다. TypeSafe 직접 연결은 일시 보류한다.
 
 - [x] 실행 전 역할별 모델 설정 및 적용 확인: project `.codex/agents` TOML 생성·파싱 및 명시 spawn으로 Plan Astra High / Builder Terra Medium / Reviewer Terra High 확인. 파일 기반 자동 역할 선택은 미검증이지만, 독립 재리뷰는 PASS.
-- [ ] 00. Gateway 경유 Jev 최소 호출 성공
+- [x] 00. Gateway 경유 Jev 최소 호출 성공: 실제 응답 2건, 로컬 검사와 독립 리뷰 PASS
 - [ ] 01. Next.js 앱 기반 설정
 - [ ] 02. 입력·출력 규격과 프리셋 5개
 - [ ] 03. 서버 API와 Gateway 연결
@@ -19,4 +19,3 @@
 - [ ] 제공된 UI 참고 이미지 기준으로 단일 열 앱 화면 구성
 - [ ] 실제 선택지 확률과 confidence를 구분해 표시
 - [ ] 조건 변경 후 재판단 흐름 구현
-

@@ -2,7 +2,7 @@
 
 [plan.md](plan.md)의 단계별 요구사항에 따라 구현한다. 대상 경로는 제안이며 기존 구조를 우선한다. 변경 이유와 실제 코드·검증 근거를 아래 구현 기록에 남긴다. 이 문서는 구현 완료 보고가 아니다.
 
-공통 방침: Gateway 경유 Jev, 서버 전용 `AI_GATEWAY_API_KEY`, 직접 TypeSafe 연결 보류. 실제 호출 성공 전 앱 구현 대기. 테스트 fixture를 실제 서비스 결과로 제공하지 않는다. 기존 사용자 변경을 보존하고 불필요한 추상화·의존성을 추가하지 않는다.
+공통 방침: Gateway 경유 Jev, 서버 전용 `AI_GATEWAY_API_KEY`, 직접 TypeSafe 연결 보류. 00의 실제 호출과 독립 리뷰는 통과했으며 이후 앱 구현에서 이 경로를 사용한다. 테스트 fixture를 실제 서비스 결과로 제공하지 않는다. 기존 사용자 변경을 보존하고 불필요한 추상화·의존성을 추가하지 않는다.
 
 ## 00-preflight-and-jev
 
@@ -13,7 +13,7 @@
 4. 20초 timeout과 HTTP 오류 처리를 적용하고 `answers.purchase`의 type, choice, 유한한 0~1 confidence를 검증한다.
 5. 키가 없으면 네트워크 호출 전 종료한다. 성공 시 검증된 decision/confidence만 출력한다. 원문 오류와 헤더를 출력하지 않는다.
 6. 문법 검사와 키 누락 동작 확인 후 인증된 실제 호출을 수행한다. 키가 없으면 BLOCKED로 기록한다.
-실행 목표: `node --env-file=.env.local scripts/smoke-jev.mjs`. 현재 직접 호출 스크립트는 아직 전환 전이다.
+실행 목표: `node --env-file=.env.local scripts/smoke-jev.mjs`. Gateway 전환과 실제 호출 검증은 완료했다.
 
 ## 01-app-foundation
 
@@ -87,12 +87,12 @@
 7. 중단·기한 도달·완료 시 현재 상태와 미완료를 기록하고 종료한다.
 
 ## 구현 기록
-단계별로 실제 작업 시 작성한다. 현재 Gateway 전환과 앱 구현은 미완료다.
+단계별로 실제 작업 시 작성한다. Gateway 전환과 실제 호출 검증은 완료했고, 앱 구현은 아직 미완료다.
 
 | 단계 | 수정 파일·핵심 코드 | 계획과의 차이 | 검증 명령·결과 | 실제 호출 여부 | 막힘·다음 작업 |
 |---|---|---|---|---|---|
 | 실행 전 역할별 모델 설정 | `.codex/agents/{plan,builder,reviewer}.toml` | project-scoped TOML 역할 설정을 추가했다. Reviewer는 R1에 따라 `sandbox_mode = "read-only"`를 지정했다. | 세 파일의 필수 TOML 필드·모델·추론 수준·action 문서 참조를 확인했고, TOML 파싱 및 명시 spawn으로 Plan `gpt-6-astra`/`high`, Builder `gpt-5.6-terra`/`medium`, Reviewer `gpt-5.6-terra`/`high`를 확인했다. 명시 spawn 또는 런타임 설정이 파일 기반 자동 선택을 덮어쓸 수 있으므로 자동 선택은 미검증이다. | 해당 없음 | R1/R2 수정의 독립 재리뷰 PASS; 00 Gateway 검증과 분리. |
-| 00 | 기존 직접 호출 스크립트만 준비됨 | Gateway 전환 필요 | Gateway 검증 미실행 | 없음 | Gateway 인증 필요 |
+| 00 | `scripts/smoke-jev.mjs`, `.env.example`를 Gateway endpoint·server key·`typesafe-ai/jev`로 전환했다. 403은 결제 수단/customer verification 안내만 출력하고 provider body는 숨긴다. | 직접 TypeSafe 경로는 보류한다. | 문법·키 누락·mocked 403·diff 검사를 통과했다. 실제 호출 2건은 HTTP 200, `SKIP`/confidence `0.69`, `SKIP`/confidence `0.62`; 두 번째 probabilities는 `SKIP 0.74`, `WAIT 0.25`, `BUY 0.01`이었다. | Gateway 실제 호출 성공 | 독립 리뷰 PASS. 역할 설정 선행 커밋: `e378d7f`. |
 
 리뷰 수정은 지적 ID, 수정 파일, 수정 내용, 재검증 결과를 추가한다. 키와 민감 정보는 기록하지 않는다. 단계별 변경을 커밋할 때 해당 단계의 파일만 staging하고 커밋 SHA와 검사 결과를 구현 기록에 추가한다.
 

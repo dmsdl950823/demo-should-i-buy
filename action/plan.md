@@ -2,7 +2,7 @@
 
 프로젝트 목표와 범위는 [INTENT.md](../INTENT.md), 진행 체크리스트는 [TODO.md](../TODO.md)를 따른다. 단계별 상세 계획은 이 파일에서만 관리한다.
 
-현재는 Vercel AI Gateway 경유 Jev 인증 및 실제 호출 검증 대기 상태다. TypeSafe 직접 연결은 일시 보류한다. 기존 직접 호출 스크립트의 Gateway 전환은 아직 미완료다.
+Vercel AI Gateway 경유 Jev 실제 호출과 00 독립 리뷰는 완료했다. TypeSafe 직접 연결은 일시 보류한다.
 
 ## 실행 전 준비: 역할별 모델 설정
 상태: DONE — project `.codex/agents/{plan,builder,reviewer}.toml` 생성·TOML 파싱 및 명시 spawn으로 각 역할의 모델·추론 수준을 확인했고, 독립 재리뷰가 PASS했다. 파일 기반 자동 역할 선택은 직접 검증하지 않았다.
@@ -40,7 +40,7 @@
 
 
 ## 00. 환경 및 Jev 최소 호출
-상태: BLOCKED — Vercel AI Gateway 인증 및 실제 호출 검증 필요
+상태: DONE — Vercel AI Gateway 경유 실제 호출 2건과 스크립트·실행 기록의 독립 리뷰가 PASS했다.
 담당: 메인 + Jev/API
 
 ### 현재 연결 방침 (2026-09-22)
@@ -51,19 +51,25 @@
 - 직접 가입이 열리면 연결 설정 교체와 회귀 검증을 검토한다. 자동 전환하거나 직접 연결 실패 시 몰래 다른 모델로 대체하지 않는다.
 
 ### Gateway 전환 작업
-- [ ] Vercel 계정에서 AI Gateway 사용 가능 여부와 크레딧·현재 가격을 확인한다.
-- [ ] `AI_GATEWAY_API_KEY`를 서버 환경변수 또는 git에서 제외된 `.env.local`에 설정한다.
-- [ ] 기존 `scripts/smoke-jev.mjs`의 직접 연결을 Gateway endpoint·키·모델로 전환한다. `.env.example`도 같은 이름으로 변경한다. 이 항목은 아직 계획이며 코드 전환 완료로 간주하지 않는다.
-- [ ] 인증된 최소 choice 요청으로 BUY/WAIT/SKIP 및 confidence를 검증한다. 사용한 모델과 확인 가능한 provider 정보를 비밀정보 없이 기록한다.
+- 계정의 $5 무료 크레딧 표시는 사용자가 보고했다. 현재 가격과 계정별 잔액은 이 단계에서 독립 확인하지 않았으며 배포 전에 별도로 확인한다.
+- [x] `AI_GATEWAY_API_KEY`를 git에서 제외된 `.env.local`에 설정했다.
+- [x] `scripts/smoke-jev.mjs`를 Gateway endpoint·키·모델로 전환하고 `.env.example`도 같은 이름으로 변경했다.
+- [x] 인증된 최소 choice 요청으로 BUY/WAIT/SKIP 및 confidence를 검증하고, 모델·응답 근거를 비밀정보 없이 기록했다.
+
+### 실행 기록 (2026-09-22)
+
+- Gateway를 통한 실제 요청 2건이 HTTP 200으로 성공했다. 모델은 `typesafe-ai/jev`였고, 두 응답의 choice는 `SKIP`, confidence는 각각 `0.69`, `0.62`였다.
+- 두 번째 응답의 probabilities는 `SKIP 0.74`, `WAIT 0.25`, `BUY 0.01`이었다. confidence는 선택지 확률과 별도 값으로 유지한다.
+- 앞선 HTTP 403은 customer verification과 유효한 결제 수단 설정이 필요하다는 안전한 오류 안내로 처리한다. 원문 provider body와 키는 기록하거나 출력하지 않는다.
 
 ### 작업
-- [ ] 저장소 지침, git 상태와 remote, Node와 패키지 매니저, 기존 파일을 확인한다. 기존 변경은 보존한다.
-- [ ] `https://typesafe.ai`에서 연결된 공식 문서와 공식 SDK 저장소를 따라 최신 사용법을 확인한다. 비공식 유사 도메인의 내용을 규격으로 채택하지 않는다.
-- [ ] 패키지 이름·버전·지원 런타임·endpoint·인증 방식·모델·choice 요청/응답 구조를 기록한다.
-- [ ] confidence가 별도 값인지 선택지 확률에서 얻는 값인지 확인한다. 근거 없이 계산하거나 만들어내지 않는다.
-- [ ] 공식 규격에 맞는 최소 실행 스크립트와 `.env.example`, 환경 파일 제외 규칙을 준비한다. 실제 키는 사용자가 로컬 환경변수 또는 git에서 제외된 파일로 설정하도록 한다.
-- [ ] BUY/WAIT/SKIP 중 하나를 반환하는 실제 요청 1건을 실행한다. 응답 구조와 숫자 범위를 확인한다.
-- [ ] 문서 링크, 확인 날짜, SDK 버전, 비밀정보를 제거한 실행 결과를 기록한다.
+- [x] 저장소 지침, git 상태와 기존 파일을 확인하고 기존 변경을 보존했다.
+- [x] Vercel의 TypeSafe 호환 API와 인증 공식 문서를 확인했다. 비공식 유사 도메인을 규격으로 채택하지 않는다.
+- [x] Gateway endpoint·Bearer 인증·`typesafe-ai/jev` 모델과 choice 응답 구조를 기록했다.
+- [x] confidence가 probabilities와 별도 값임을 실제 응답의 두 값으로 확인했다.
+- [x] 공식 Gateway 규격의 최소 스크립트와 `AI_GATEWAY_API_KEY` placeholder를 준비했다. 실제 키는 git에서 제외된 `.env.local`에만 둔다.
+- [x] BUY/WAIT/SKIP 중 `SKIP`을 반환한 실제 요청 2건을 실행해 response 수치 범위를 확인했다.
+- [x] 확인 날짜와 비밀정보를 제거한 실제 실행 결과를 기록했다.
 
 ### 통과 조건
 공식 API에 인증된 실제 요청이 성공하고 decision/confidence 매핑을 설명할 수 있다. 연결 스크립트는 이후 `smoke:jev` 명령으로 재사용한다.
