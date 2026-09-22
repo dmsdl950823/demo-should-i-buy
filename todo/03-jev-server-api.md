@@ -4,7 +4,9 @@
 담당: Jev/API
 
 - [ ] `POST /api/decision`에서 JSON과 입력 계약을 검증한다. 잘못된 요청은 Jev 호출 전에 거절한다.
-- [ ] 00에서 검증한 SDK/API로 서버 전용 어댑터를 구현한다.
+- [ ] 00에서 검증한 Vercel의 TypeSafe 호환 API로 서버 전용 어댑터를 구현한다. TypeSafe 직접 연결은 일시 보류한다.
+- [ ] `AI_GATEWAY_API_KEY`, Gateway endpoint, `typesafe-ai/jev`를 사용한다. 현재 MVP에 TypeSafe 직접 키를 요구하지 않는다.
+- [ ] 연결 설정을 판단 로직과 분리해 향후 직접 연결로 바꿀 수 있게 한다. 브라우저 입력으로 endpoint나 모델을 바꾸지 않는다.
 - [ ] 환경변수 이름은 공식 인증 방식에 맞춰 확정하고 `.env.example`에 placeholder만 넣는다. `NEXT_PUBLIC_` 키를 사용하지 않는다.
 - [ ] 구매 판단 지침과 입력 데이터를 구분해서 전달하며 설명 생성 질문은 추가하지 않는다.
 - [ ] 응답 decision enum과 confidence 유한수/범위를 검사한다. 알 수 없는 응답을 성공으로 변환하지 않는다.
