@@ -94,3 +94,8 @@
 | 00 | 기존 직접 호출 스크립트만 준비됨 | Gateway 전환 필요 | Gateway 검증 미실행 | 없음 | Gateway 인증 필요 |
 
 리뷰 수정은 지적 ID, 수정 파일, 수정 내용, 재검증 결과를 추가한다. 키와 민감 정보는 기록하지 않는다.
+
+
+## 최신 UI 방침
+references/purchase-app-ui.png를 기준으로 action/plan.md의 단일 열 입력→결과→조건 변경 흐름을 적용한다.
+CSS grid의 다열 전환 없이 max-width 약 480px과 width:100%로 구성한다. 실제 probabilities를 응답 schema에 추가하고 검증한 값으로 막대를 그린다. confidence와 별도 표시하며 고정 설명을 쓴다. 조건 변경은 명시적 제출로 재호출하고 차트용 가짜 데이터를 만들지 않는다.

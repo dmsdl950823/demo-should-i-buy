@@ -13,3 +13,8 @@
 
 순서: 00 → 01 → 02 → 03·04 → 05 → 06. 07은 전 과정에 적용.
 구현 계획은 [action/plan.md](action/plan.md), 구현 방식은 [action/builder.md](action/builder.md), 코드 리뷰는 [action/reviewer.md](action/reviewer.md)에서 관리한다.
+
+- [ ] 제공된 UI 참고 이미지 기준으로 단일 열 앱 화면 구성
+- [ ] 실제 선택지 확률과 confidence를 구분해 표시
+- [ ] 조건 변경 후 재판단 흐름 구현
+
