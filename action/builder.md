@@ -87,7 +87,7 @@
 7. 중단·기한 도달·완료 시 현재 상태와 미완료를 기록하고 종료한다.
 
 ## 구현 기록
-단계별로 실제 작업 시 작성한다. Gateway 연결과 서버 API는 실제 호출까지 검증했다. 화면도 구현·검증했다. 통합 평가와 배포 문서는 진행 중이다.
+단계별로 실제 작업 시 작성한다. Gateway 연결과 서버 API는 실제 호출까지 검증했다. 화면도 구현·검증했다. 통합 평가와 배포 문서까지 완료했다. 07 최종 기록을 검토 중이다.
 
 | 단계 | 수정 파일·핵심 코드 | 계획과의 차이 | 검증 명령·결과 | 실제 호출 여부 | 막힘·다음 작업 |
 |---|---|---|---|---|---|
@@ -98,7 +98,8 @@
 | 03 | `lib/jev.server.ts` 서버 전용 Gateway 어댑터와 `app/api/decision/route.ts`, 모의 오류 테스트를 추가했다. `server-only` 의존성을 명시했다. | 실제 smoke와 같은 고정 endpoint/model, KRW state, 20초 abort, 입력 선검증, no-store, 안전한 오류 매핑을 적용했다. | 전체 Vitest 55개, lint, typecheck, build 통과. 실제 route에서 유효 입력 HTTP 200 및 무효 입력/JSON HTTP 400 확인. | Gateway 실제 호출: WAIT, confidence 0.76, BUY/WAIT/SKIP 확률 0.08/0.84/0.08 | 커밋 `22b7393`. 독립 Reviewer R03-1 timeout 테스트 요청 후 보강·재리뷰 PASS. |
 | 04 | `app/page.tsx`, `app/purchase-form.tsx`, `app/globals.css`에 단일 열 폼/결과 화면, 직접/예시 전환, 슬라이더, 조건 요약과 상태 처리를 구현했다. | 참고 이미지의 세 패널을 모바일 단일 열 순차 흐름으로 구현하고, 차트·고정 확률·SVG는 넣지 않았다. | 55개 테스트, lint, typecheck, build, 프로덕션 브라우저에서 예시 선택→실제 결과→입력 변경 시 초기화 확인. | Gateway 실제 화면 호출: WAIT/confidence 0.74, probabilities BUY/WAIT/SKIP 0.08/0.83/0.09 | 커밋 `eaf9f83`. 독립 리뷰 UI-1~UI-6 수정 후 PASS. |
 | 05 | `qa/evaluation-cases.json`, `scripts/evaluate-jev.mjs`, `qa/evaluation-results.json`, `qa/evaluation-report.md`에 사전 기준·실행기·실제 결과를 기록했다. | 20개 고유 조건+5개 동일 반복을 결과 확인 전에 고정하고, 선택지 허용 기준은 모델에 보내지 않았다. 자동 재시도 없음. | 25/25 유효 응답, 19/20 사전 기준 일치, 5/5 반복 choice 일치. `npm test` 55개, typecheck, lint, build 통과. 클라이언트 번들 11개 키 누출 없음. | Gateway 실제 25회 | 커밋 `98385bd`. 독립 리뷰 PASS. S2 한 건 불일치와 정확도 해석 한계를 보고서에 명시. |
-| 06 | `README.md`를 실제 앱 안내로 갱신하고 `.gitignore`에 `.vercel/`을 추가했다. | 소개는 짧게 유지하고 서버 환경변수·배포 준비·비용 통제·한계만 담았다. | README 명령·Node/Next/Gateway 설정을 코드와 대조하고 `git check-ignore`, diff 검사를 통과했다. | 해당 없음 | 독립 리뷰 PASS. 공개 배포·push는 하지 않았다. |
+| 06 | `README.md`를 실제 앱 안내로 갱신하고 `.gitignore`에 `.vercel/`을 추가했다. | 소개는 짧게 유지하고 서버 환경변수·배포 준비·비용 통제·한계만 담았다. | README 명령·Node/Next/Gateway 설정을 코드와 대조하고 `git check-ignore`, diff 검사를 통과했다. | 해당 없음 | 커밋 `e7b512a`. 독립 리뷰 PASS. 공개 배포·push는 하지 않았다. |
+| 07 | TODO와 action 문서에 실행·검증·리뷰·커밋 상태를 최종 기록했다. | 예약은 만들지 않았다. 00~06이 당일 완료돼 추가 백그라운드 실행이 필요하지 않았다. | `git log`에서 역할 설정 및 00~06의 별도 커밋과 origin/main 대비 미전송 상태를 확인했다. 07 커밋 후 clean worktree를 확인한다. | 해당 없음 | 단계 00~06 완료. 공개 배포·push는 추후 사용자 결정. |
 
 리뷰 수정은 지적 ID, 수정 파일, 수정 내용, 재검증 결과를 추가한다. 키와 민감 정보는 기록하지 않는다. 단계별 변경을 커밋할 때 해당 단계의 파일만 staging하고 커밋 SHA와 검사 결과를 구현 기록에 추가한다.
 

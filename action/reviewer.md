@@ -2,7 +2,7 @@
 
 [plan.md](plan.md)와 [builder.md](builder.md)를 기준으로 실제 코드·diff·검증 결과를 확인한다. 문서 작성만으로 리뷰 통과를 선언하지 않는다. 가능하면 구현자와 다른 에이전트가 검토하고, 자체 리뷰라면 명시한다.
 
-현재 판정: **00 PASS / 앱 단계 NOT_REVIEWED**. Gateway 전환은 독립 리뷰를 통과했고, 앱 구현은 아직 리뷰하지 않았다.
+현재 판정: **00~07 PASS**. Gateway 전환, 앱 구현, 통합 QA와 배포 문서는 독립 리뷰를 통과했다.
 
 ## 00-preflight-and-jev
 
@@ -92,7 +92,7 @@
 
 Builder 검증 근거: 문법 검사, 키 누락 시 네트워크 전 종료, mocked HTTP 403의 안전한 customer-verification/결제 수단 안내, 실제 Gateway HTTP 200 두 건, `git diff --check`. 실제 응답은 `typesafe-ai/jev`에서 `SKIP`/confidence `0.69`, `SKIP`/confidence `0.62`였고, 두 번째 probabilities는 `SKIP 0.74`, `WAIT 0.25`, `BUY 0.01`이었다.
 
-판정: **PASS**. 독립 Reviewer는 Gateway endpoint·서버 키 이름·20초 timeout·응답 검증·403 안내가 provider 원문 또는 키를 노출하지 않는지와 실행 기록의 실제 증거 일치를 확인했다. 앱 단계는 계속 **NOT_REVIEWED**다.
+판정: **PASS**. 독립 Reviewer는 Gateway endpoint·서버 키 이름·20초 timeout·응답 검증·403 안내가 provider 원문 또는 키를 노출하지 않는지와 실행 기록의 실제 증거 일치를 확인했다. 00 리뷰 당시 앱 단계는 **NOT_REVIEWED**였다. 이후 01~06 리뷰 기록은 아래를 따른다.
 
 ### 01-app-foundation (2026-09-22)
 
@@ -137,6 +137,14 @@ Builder 검증 근거: Vitest 37개, typecheck, lint, build 통과. 계약은 co
 범위: `README.md`, `.gitignore`, 기존 `.env.example`·package·route와 배포 안내의 일치.
 
 판정: **PASS**. README의 Gateway 경유 `typesafe-ai/jev`, 서버 전용 `AI_GATEWAY_API_KEY`, Node 24.4+, 실제 npm 명령, Next 서버 route, 503/429/20초 timeout, 예시 가격·confidence 의미와 미배포 상태가 코드/실행 기록과 일치한다. `.env.local`, `.next`, `.vercel`은 제외되고 `.env.example`은 빈 placeholder만 포함한다. 원격 push와 공개 배포는 수행하지 않았다. 독립 Reviewer가 55개 테스트, typecheck, lint, diff 검사 통과를 확인했다.
+
+### 07-autonomous-run (2026-09-22)
+
+범위: `TODO.md`, `action/plan.md`, `action/builder.md`, `action/reviewer.md`의 실행 기록과 git 상태.
+
+00~06은 단계별 로컬 커밋 `75b8d8d`, `df5cbbc`, `a0f1a74`, `22b7393`, `eaf9f83`, `98385bd`, `e7b512a`로 분리됐다. 역할별 모델 설정은 별도 `e378d7f`다. 필수 검증과 독립 리뷰를 각 완료 기록에 연결했다. 단계 07 기록 후 최종 staged 범위와 clean worktree를 확인한다. 원격 push·배포·예약 자동화는 실행하지 않았다.
+
+판정: **PASS**. S07-1~S07-5를 수정했다. 처음 실행 지시의 정확한 시각은 미기록이므로 전체 24시간 소요는 검증하지 않았고, 확인 가능한 첫 완료 커밋부터 06 완료 커밋까지의 약 1시간만 기술했다. 07 전용 커밋을 마지막으로 남기고 clean worktree를 확인한다.
 
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
