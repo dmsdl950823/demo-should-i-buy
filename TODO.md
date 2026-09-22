@@ -2,6 +2,7 @@
 
 현재 막힘: Vercel AI Gateway 인증 및 실제 호출 검증 대기. TypeSafe 직접 연결은 일시 보류.
 
+- [ ] 실행 전 역할별 모델 설정 및 적용 확인: Astra High / Terra Medium / Terra High
 - [ ] 00. Gateway 경유 Jev 최소 호출 성공
 - [ ] 01. Next.js 앱 기반 설정
 - [ ] 02. 입력·출력 규격과 프리셋 5개
