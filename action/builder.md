@@ -87,7 +87,7 @@
 7. 중단·기한 도달·완료 시 현재 상태와 미완료를 기록하고 종료한다.
 
 ## 구현 기록
-단계별로 실제 작업 시 작성한다. Gateway 연결과 서버 API는 실제 호출까지 검증했다. 화면과 통합·문서는 진행 중이다.
+단계별로 실제 작업 시 작성한다. Gateway 연결과 서버 API는 실제 호출까지 검증했다. 화면도 구현·검증했다. 통합 평가와 배포 문서는 진행 중이다.
 
 | 단계 | 수정 파일·핵심 코드 | 계획과의 차이 | 검증 명령·결과 | 실제 호출 여부 | 막힘·다음 작업 |
 |---|---|---|---|---|---|
@@ -95,7 +95,8 @@
 | 00 | `scripts/smoke-jev.mjs`, `.env.example`를 Gateway endpoint·server key·`typesafe-ai/jev`로 전환했다. 403은 결제 수단/customer verification 안내만 출력하고 provider body는 숨긴다. | 직접 TypeSafe 경로는 보류한다. | 문법·키 누락·mocked 403·diff 검사를 통과했다. 실제 호출 2건은 HTTP 200, `SKIP`/confidence `0.69`, `SKIP`/confidence `0.62`; 두 번째 probabilities는 `SKIP 0.74`, `WAIT 0.25`, `BUY 0.01`이었다. | Gateway 실제 호출 성공 | 독립 리뷰 PASS. 역할 설정 선행 커밋: `e378d7f`. |
 | 01 | App Router TypeScript foundation: `app/`, package/config files, ESLint flat config, Korean metadata and placeholder. | Plan의 TypeScript `7.0.2`는 eslint-config-next에 포함된 typescript-eslint가 지원하지 않아 `6.0.3`으로 고정했다. | `npm install`, typecheck, lint, build, dev HTTP 200 통과. | 해당 없음 | 독립 리뷰 PASS. 입력 UI·API·프리셋은 다음 단계 범위. |
 | 02 | `lib/purchase.ts`에 입력·응답 타입, labels, dependency-free runtime validation을, `lib/presets.ts`에 input-only 프리셋 5개를 추가했다. | 입력 검증은 productName trim과 범위·enum을 확인한다. 응답은 confidence와 필수 BUY/WAIT/SKIP probabilities를 별도로 검증하며 값을 정규화하지 않는다. | Vitest 37개, typecheck, lint, build 통과. | 해당 없음 | 독립 리뷰 PASS. API route와 UI는 다음 단계 범위. |
-| 03 | `lib/jev.server.ts` 서버 전용 Gateway 어댑터와 `app/api/decision/route.ts`, 모의 오류 테스트를 추가했다. `server-only` 의존성을 명시했다. | 실제 smoke와 같은 고정 endpoint/model, KRW state, 20초 abort, 입력 선검증, no-store, 안전한 오류 매핑을 적용했다. | 전체 Vitest 55개, lint, typecheck, build 통과. 실제 route에서 유효 입력 HTTP 200 및 무효 입력/JSON HTTP 400 확인. | Gateway 실제 호출: WAIT, confidence 0.76, BUY/WAIT/SKIP 확률 0.08/0.84/0.08 | 독립 Reviewer R03-1 timeout 테스트 요청 후 보강·재리뷰 PASS. |
+| 03 | `lib/jev.server.ts` 서버 전용 Gateway 어댑터와 `app/api/decision/route.ts`, 모의 오류 테스트를 추가했다. `server-only` 의존성을 명시했다. | 실제 smoke와 같은 고정 endpoint/model, KRW state, 20초 abort, 입력 선검증, no-store, 안전한 오류 매핑을 적용했다. | 전체 Vitest 55개, lint, typecheck, build 통과. 실제 route에서 유효 입력 HTTP 200 및 무효 입력/JSON HTTP 400 확인. | Gateway 실제 호출: WAIT, confidence 0.76, BUY/WAIT/SKIP 확률 0.08/0.84/0.08 | 커밋 `22b7393`. 독립 Reviewer R03-1 timeout 테스트 요청 후 보강·재리뷰 PASS. |
+| 04 | `app/page.tsx`, `app/purchase-form.tsx`, `app/globals.css`에 단일 열 폼/결과 화면, 직접/예시 전환, 슬라이더, 조건 요약과 상태 처리를 구현했다. | 참고 이미지의 세 패널을 모바일 단일 열 순차 흐름으로 구현하고, 차트·고정 확률·SVG는 넣지 않았다. | 55개 테스트, lint, typecheck, build, 프로덕션 브라우저에서 예시 선택→실제 결과→입력 변경 시 초기화 확인. | Gateway 실제 화면 호출: WAIT/confidence 0.74, probabilities BUY/WAIT/SKIP 0.08/0.83/0.09 | 독립 리뷰 UI-1~UI-6 수정 후 PASS. |
 
 리뷰 수정은 지적 ID, 수정 파일, 수정 내용, 재검증 결과를 추가한다. 키와 민감 정보는 기록하지 않는다. 단계별 변경을 커밋할 때 해당 단계의 파일만 staging하고 커밋 SHA와 검사 결과를 구현 기록에 추가한다.
 

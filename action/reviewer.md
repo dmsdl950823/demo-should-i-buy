@@ -118,6 +118,14 @@ Builder 검증 근거: Vitest 37개, typecheck, lint, build 통과. 계약은 co
 
 재리뷰 판정: **PASS**. 전체 Vitest 55개와 lint, typecheck, build를 통과했다. 실제 Next route에서 잘못된 입력·JSON은 HTTP 400, 유효한 노트북 입력은 Jev HTTP 200으로 WAIT/confidence 0.76, probabilities BUY 0.08·WAIT 0.84·SKIP 0.08을 반환했다. 키는 응답에 포함되지 않았다. 서버 경계, 고정 Gateway 설정, 출력 검증, no-store, 안전한 오류 매핑을 확인했다.
 
+### 04-main-ui (2026-09-22)
+
+범위: `app/page.tsx`, `app/purchase-form.tsx`, `app/globals.css`.
+
+초기 독립 리뷰에서 UI-1~UI-4로 계획에 명시된 직접/예시 전환·여유자금 슬라이더·입력 조건 요약 누락, BUY/WAIT 텍스트 대비 부족, reduced-motion 미처리를 지적했다. 수정 후 UI-5/6으로 보조 안내 글자의 대비를 점검해 수정했다.
+
+최종 판정: **PASS**. 확인한 보조 텍스트 최소 대비 4.53:1, 로딩 문구 4.99:1. 55개 테스트와 `git diff --check`를 독립 확인했고 Builder의 lint, typecheck, build 성공을 확인했다. 메인은 프로덕션 화면에서 예시 입력→실제 Jev WAIT 결과, 별도 confidence와 실제 확률, 6개 조건 요약, 입력 변경 시 이전 결과 제거를 확인했다. 단일 열 모바일 구성과 SVG·클라이언트 비밀값 부재를 확인했다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.
