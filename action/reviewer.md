@@ -132,6 +132,12 @@ Builder 검증 근거: Vitest 37개, typecheck, lint, build 통과. 계약은 co
 
 판정: **PASS**. 독립 Reviewer가 20개 고유 조건·5개 반복, 허용 선택지의 모델 입력 제외, 25/25 유효 응답, 19/20 사전 기준 일치, 5/5 반복 동일 선택, 최대 confidence 차이 0.04·개별 확률 차이 0.02를 재계산했다. 불일치는 S2 한 건으로 기록했고 기준을 사후 수정하지 않았다. `npm test` 55개, typecheck, lint, diff 검사는 독립 통과했다. Reviewer 환경의 build는 `.next/trace-build` 쓰기 제한으로 미실행이지만 메인의 production build는 성공했고 `/api/decision`을 동적 route로 포함했다. 실제 키는 client static 파일 11개에서 발견되지 않았고 `.env.local`은 git 비추적이다. 소규모 주관적 기준 일치를 객관적 정확도로 확대 해석하지 않는다.
 
+### 06-docs-and-release (2026-09-22)
+
+범위: `README.md`, `.gitignore`, 기존 `.env.example`·package·route와 배포 안내의 일치.
+
+판정: **PASS**. README의 Gateway 경유 `typesafe-ai/jev`, 서버 전용 `AI_GATEWAY_API_KEY`, Node 24.4+, 실제 npm 명령, Next 서버 route, 503/429/20초 timeout, 예시 가격·confidence 의미와 미배포 상태가 코드/실행 기록과 일치한다. `.env.local`, `.next`, `.vercel`은 제외되고 `.env.example`은 빈 placeholder만 포함한다. 원격 push와 공개 배포는 수행하지 않았다. 독립 Reviewer가 55개 테스트, typecheck, lint, diff 검사 통과를 확인했다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.
