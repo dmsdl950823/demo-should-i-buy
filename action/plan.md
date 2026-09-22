@@ -159,27 +159,27 @@ UI와 API가 confidence와 probabilities를 구분한 같은 계약을 사용하
 - API route와 UI는 다음 단계에서 이 공유 계약을 사용한다. 이 단계의 계약·프리셋은 독립 리뷰 PASS.
 
 ## 03. 서버 API와 Jev 연결
-상태: TODO
+상태: DONE — 실제 Jev route 호출과 55개 테스트, 독립 재리뷰 PASS
 선행 조건: 02
 담당: Jev/API
 
-- [ ] `POST /api/decision`에서 JSON과 입력 계약을 검증한다. 잘못된 요청은 Jev 호출 전에 거절한다.
-- [ ] 00에서 검증한 Vercel의 TypeSafe 호환 API로 서버 전용 어댑터를 구현한다. TypeSafe 직접 연결은 일시 보류한다.
-- [ ] `AI_GATEWAY_API_KEY`, Gateway endpoint, `typesafe-ai/jev`를 사용한다. 현재 MVP에 TypeSafe 직접 키를 요구하지 않는다.
-- [ ] 연결 설정을 판단 로직과 분리해 향후 직접 연결로 바꿀 수 있게 한다. 브라우저 입력으로 endpoint나 모델을 바꾸지 않는다.
-- [ ] 환경변수 이름은 공식 인증 방식에 맞춰 확정하고 `.env.example`에 placeholder만 넣는다. `NEXT_PUBLIC_` 키를 사용하지 않는다.
-- [ ] 구매 판단 지침과 입력 데이터를 구분해서 전달하며 설명 생성 질문은 추가하지 않는다.
-- [ ] 응답 decision enum과 confidence 유한수/범위를 검사한다. 알 수 없는 응답을 성공으로 변환하지 않는다.
-- [ ] 유한한 요청 timeout을 설정하고 무한 재시도하지 않는다.
-- [ ] 입력 오류, 설정 누락, 인증/한도 오류, timeout, provider 장애를 안전한 상태 코드와 사용자 메시지로 매핑한다.
-- [ ] 응답 캐시를 비활성화하고 키·구매 입력·provider 원문을 로그로 남기지 않는다.
-- [ ] 서버 어댑터와 route를 분리해 실제 과금 없이 오류 분기를 테스트할 수 있게 한다.
+- [x] `POST /api/decision`에서 JSON과 입력 계약을 검증한다. 잘못된 요청은 Jev 호출 전에 거절한다.
+- [x] 00에서 검증한 Vercel의 TypeSafe 호환 API로 서버 전용 어댑터를 구현한다. TypeSafe 직접 연결은 일시 보류한다.
+- [x] `AI_GATEWAY_API_KEY`, Gateway endpoint, `typesafe-ai/jev`를 사용한다. 현재 MVP에 TypeSafe 직접 키를 요구하지 않는다.
+- [x] 연결 설정을 판단 로직과 분리해 향후 직접 연결로 바꿀 수 있게 한다. 브라우저 입력으로 endpoint나 모델을 바꾸지 않는다.
+- [x] 환경변수 이름은 공식 인증 방식에 맞춰 확정하고 `.env.example`에 placeholder만 넣는다. `NEXT_PUBLIC_` 키를 사용하지 않는다.
+- [x] 구매 판단 지침과 입력 데이터를 구분해서 전달하며 설명 생성 질문은 추가하지 않는다.
+- [x] 응답 decision enum과 confidence 유한수/범위를 검사한다. 알 수 없는 응답을 성공으로 변환하지 않는다.
+- [x] 유한한 요청 timeout을 설정하고 무한 재시도하지 않는다.
+- [x] 입력 오류, 설정 누락, 인증/한도 오류, timeout, provider 장애를 안전한 상태 코드와 사용자 메시지로 매핑한다.
+- [x] 응답 캐시를 비활성화하고 키·구매 입력·provider 원문을 로그로 남기지 않는다.
+- [x] 서버 어댑터와 route를 분리해 실제 과금 없이 오류 분기를 테스트할 수 있게 한다.
 
 ### 완료 기준
 정상 입력으로 실제 Jev 결과를 반환한다. 설정이 없으면 명확한 오류를 반환하며 임의의 BUY/WAIT/SKIP을 반환하지 않는다.
 
 ### 작업 결과
-실행 시 기록.
+실제 `POST /api/decision`은 유효한 노트북 입력에 HTTP 200으로 WAIT/confidence 0.76, probabilities BUY 0.08·WAIT 0.84·SKIP 0.08을 반환했다. 잘못된 입력과 JSON은 각각 HTTP 400으로 거절했다. 20초 abort, 401/403/429/5xx, 잘못된 응답, 키 누락을 mock 테스트로 검증했다. 전체 55개 테스트, lint, typecheck, build 통과. 독립 Reviewer가 timeout 테스트 보강을 요청했고 수정 후 PASS했다.
 
 ## 04. 단일 메인 화면
 상태: TODO

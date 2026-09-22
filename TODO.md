@@ -6,7 +6,7 @@
 - [x] 00. Gateway 경유 Jev 최소 호출 성공: 실제 응답 2건, 로컬 검사와 독립 리뷰 PASS
 - [x] 01. Next.js 앱 기반 설정: 타입 검사·lint·빌드·개발 HTTP 200, 독립 리뷰 PASS
 - [x] 02. 입력·출력 규격과 프리셋 5개: 37개 테스트·타입 검사·lint·빌드, 독립 리뷰 PASS
-- [ ] 03. 서버 API와 Gateway 연결
+- [x] 03. 서버 API와 Gateway 연결: 55개 테스트·실제 route HTTP 200/400·독립 리뷰 PASS
 - [ ] 04. 모바일 대응 단일 화면과 loading/error 처리
 - [ ] 05. 통합 테스트·실제 연결·코드 리뷰
 - [ ] 06. README와 배포 준비

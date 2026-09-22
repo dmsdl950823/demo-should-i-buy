@@ -110,6 +110,14 @@ Builder 검증 근거: Vitest 37개, typecheck, lint, build 통과. 계약은 co
 
 판정: **PASS**. 독립 Reviewer가 여섯 입력 필드의 경계·타입·enum, 0원 여유자금, input-only 프리셋 5개, 별도 confidence 및 필수 확률 3개와 합계 허용 오차를 확인했다. 37개 테스트는 값 보존과 누락·비유한 값 거절을 포함한다. API route와 UI 통합은 다음 단계에서 검증한다.
 
+### 03-jev-server-api (2026-09-22)
+
+범위: `lib/jev.server.ts`, `app/api/decision/route.ts`, 관련 테스트와 `server-only` 의존성.
+
+초기 판정은 **CHANGES_REQUESTED**였다. R03-1: route의 timeout 오류 매핑 테스트만으로 실제 20초 abort가 검증되지 않았다. Builder가 신호를 관찰하는 fetch mock과 fake timer로 어댑터의 abort 및 `timeout` 변환 테스트를 추가했다.
+
+재리뷰 판정: **PASS**. 전체 Vitest 55개와 lint, typecheck, build를 통과했다. 실제 Next route에서 잘못된 입력·JSON은 HTTP 400, 유효한 노트북 입력은 Jev HTTP 200으로 WAIT/confidence 0.76, probabilities BUY 0.08·WAIT 0.84·SKIP 0.08을 반환했다. 키는 응답에 포함되지 않았다. 서버 경계, 고정 Gateway 설정, 출력 검증, no-store, 안전한 오류 매핑을 확인했다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.
