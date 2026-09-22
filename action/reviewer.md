@@ -94,6 +94,14 @@ Builder 검증 근거: 문법 검사, 키 누락 시 네트워크 전 종료, mo
 
 판정: **PASS**. 독립 Reviewer는 Gateway endpoint·서버 키 이름·20초 timeout·응답 검증·403 안내가 provider 원문 또는 키를 노출하지 않는지와 실행 기록의 실제 증거 일치를 확인했다. 앱 단계는 계속 **NOT_REVIEWED**다.
 
+### 01-app-foundation (2026-09-22)
+
+범위: `package.json`, `package-lock.json`, `tsconfig.json`, `eslint.config.mjs`, `app/`, `.gitignore`, `AGENTS.md`, `CLAUDE.md`.
+
+Builder 검증 근거: `npm install`, `npm run typecheck`, `npm run lint`, `npm run build`, 개발 서버 HTTP 200. TypeScript는 Plan의 `7.0.2` 대신 eslint-config-next의 typescript-eslint 지원 범위에 맞춘 `6.0.3`이다.
+
+판정: **PASS**. package/lockfile의 고정 버전, scripts, 서버 전용 환경 파일 제외, 한국어 layout·metadata, Next 생성 지침 파일과 TypeScript `6.0.3` 호환 근거를 확인했다. 설치·typecheck·lint·build·개발 HTTP 200은 Builder가 실행했다. 이 단계에는 기능 테스트가 없으며 Reviewer 환경의 Vitest 실행은 사용자별 토큰 경로 쓰기 제한으로 미실행이다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.

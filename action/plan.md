@@ -99,22 +99,24 @@ Vercel AI Gateway 경유 Jev 실제 호출과 00 독립 리뷰는 완료했다. 
 - 키를 채팅이나 문서에 붙여넣지 않는다.
 
 ## 01. Next.js 앱 기반
-상태: TODO
+상태: DONE — App Router·TypeScript 기반과 기본 페이지를 구성하고 설치·타입 검사·lint·production build·개발 서버 HTTP 검사 및 독립 리뷰를 통과했다.
 선행 조건: 00 실제 호출 성공
 담당: 메인
 
-- [ ] 기존 저장소 안에 Next.js App Router + TypeScript 앱을 구성한다. 불필요한 중첩 저장소를 만들지 않는다.
-- [ ] 구현 시점의 공식 Next.js 문서로 지원 Node 버전과 안정 버전을 확인하고 lockfile을 커밋 대상에 포함한다.
-- [ ] `dev`, `build`, `start`, `typecheck`, `lint`, `test`, `smoke:jev` 명령을 정의한다.
-- [ ] `app/`, `lib/`, `tests/`, `scripts/` 등 최소 구조만 만든다.
-- [ ] 서버 전용 모듈과 클라이언트 모듈의 경계를 정하고 환경 파일·빌드 결과·node_modules를 git에서 제외한다.
-- [ ] 한국어 페이지 언어, 기본 제목과 설명을 설정한다.
+- [x] 기존 저장소 루트에 Next.js App Router + TypeScript 앱을 구성했다. 중첩 저장소는 만들지 않았다.
+- [x] Node `24.4.0`에서 검증한 dependency lockfile을 생성했다. Plan의 TypeScript `7.0.2`는 eslint-config-next의 typescript-eslint 지원 범위와 충돌해 `6.0.3`으로 고정했다.
+- [x] `dev`, `build`, `start`, `typecheck`, `lint`, `test`, `smoke:jev` 명령을 정의했다.
+- [x] 현재 단계에 필요한 `app/`과 기존 `scripts/` 구조를 구성했다. `lib/`와 `tests/`는 다음 계약·테스트 단계에서 추가한다.
+- [x] `.env.local`, `node_modules`, `.next`, `.DS_Store`, TypeScript build info와 Next가 생성하는 `next-env.d.ts`를 git에서 제외했다. `AGENTS.md`와 `CLAUDE.md`는 Next dev가 재생성하는 프로젝트 지침으로 추적 대상에 둔다.
+- [x] `lang="ko"`, 한국어 기본 제목·설명과 최소 placeholder 페이지를 설정했다.
 
 ### 완료 기준
 개발 서버가 열리고 기본 프로덕션 빌드가 성공한다. README 기존 내용은 필요한 만큼 확장한다.
 
 ### 작업 결과
-실행 시 기록.
+- `npm install`, `npm run typecheck`, `npm run lint`, `npm run build`가 성공했다.
+- `npm run dev -- --port 3000` 후 `http://localhost:3000`이 HTTP 200을 반환했다.
+- 현재 페이지는 foundation placeholder이며 입력 UI·API route·프리셋을 포함하지 않는다.
 
 ## 02. API 계약 및 프리셋
 상태: TODO
