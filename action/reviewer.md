@@ -102,6 +102,14 @@ Builder 검증 근거: `npm install`, `npm run typecheck`, `npm run lint`, `npm 
 
 판정: **PASS**. package/lockfile의 고정 버전, scripts, 서버 전용 환경 파일 제외, 한국어 layout·metadata, Next 생성 지침 파일과 TypeScript `6.0.3` 호환 근거를 확인했다. 설치·typecheck·lint·build·개발 HTTP 200은 Builder가 실행했다. 이 단계에는 기능 테스트가 없으며 Reviewer 환경의 Vitest 실행은 사용자별 토큰 경로 쓰기 제한으로 미실행이다.
 
+### 02-schema-and-presets (2026-09-22)
+
+범위: `lib/purchase.ts`, `lib/presets.ts`, `tests/purchase.test.ts`, `TODO.md`, `action/plan.md`, `action/builder.md`.
+
+Builder 검증 근거: Vitest 37개, typecheck, lint, build 통과. 계약은 confidence와 required BUY/WAIT/SKIP probabilities를 별도 검증하며, 분포 합계 허용 오차는 0.02이고 값을 재정규화하지 않는다.
+
+판정: **PASS**. 독립 Reviewer가 여섯 입력 필드의 경계·타입·enum, 0원 여유자금, input-only 프리셋 5개, 별도 confidence 및 필수 확률 3개와 합계 허용 오차를 확인했다. 37개 테스트는 값 보존과 누락·비유한 값 거절을 포함한다. API route와 UI 통합은 다음 단계에서 검증한다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.

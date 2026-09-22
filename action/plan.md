@@ -119,7 +119,7 @@ Vercel AI Gateway 경유 Jev 실제 호출과 00 독립 리뷰는 완료했다. 
 - 현재 페이지는 foundation placeholder이며 입력 UI·API route·프리셋을 포함하지 않는다.
 
 ## 02. API 계약 및 프리셋
-상태: TODO
+상태: DONE — 공유 입력·출력 검증, input-only 프리셋 5개와 경계 테스트가 검사 및 독립 리뷰를 통과했다.
 선행 조건: 01
 담당: schema
 
@@ -133,23 +133,30 @@ Vercel AI Gateway 경유 Jev 실제 호출과 00 독립 리뷰는 완료했다. 
 금액 상한은 MVP 입력 제한이며 구매 판단 기준이 아니다. 여유자금은 필수 생활비 등을 제외하고 이번 달 사용할 수 있는 금액으로 안내한다.
 
 ### 출력 계약
-성공: `{ decision: "BUY" | "WAIT" | "SKIP", confidence: number }`.
-confidence는 공식 응답에서 검증된 0~1 값으로 매핑하고 화면에서 백분율로 표시한다. 공식 API가 이를 지원하지 않으면 계약을 임의로 채우지 말고 차이를 기록한다.
+성공: `{ decision: "BUY" | "WAIT" | "SKIP", confidence: number, probabilities: Record<"BUY" | "WAIT" | "SKIP", number> }`.
+- `decision`은 `answers.purchase.choice`에서 BUY/WAIT/SKIP 중 하나인지 검증한 뒤 매핑한다.
+- `confidence`는 공식 응답의 별도 필드를 유한한 0~1 숫자로 검증해 그대로 매핑한다. 화면에서는 백분율로 표시하며 선택지 확률의 최댓값으로 대체하지 않는다.
+- `probabilities`는 `answers.purchase.probabilities`에서 가져온다. BUY/WAIT/SKIP 세 키가 모두 존재하고 각 값이 유한한 0~1 숫자여야 한다. 반올림을 고려해 합계와 1의 차이가 0.02 이내인지 검증한다. 이는 앱의 검증 허용 오차이며 값을 재정규화하거나 반올림해 저장하는 규칙이 아니다.
+- confidence와 probabilities를 서로 계산해 채우지 않는다. 누락·잘못된 값은 오류로 처리하고 가짜 값이나 기본 분포를 만들지 않는다.
+- 실제 Gateway 응답 확인 근거: `probabilities: { SKIP: 0.74, WAIT: 0.25, BUY: 0.01 }`, `confidence: 0.62`. 이 값은 계약 확인 기록이며 앱·프리셋의 고정 결과로 사용하지 않는다.
 오류: `{ error: { code: string, message: string } }`. 사용자 메시지에 upstream 원문이나 키를 포함하지 않는다.
 
 ### 작업
-- [ ] 공유 타입·런타임 검증과 한국어 label을 정의한다.
-- [ ] 의미를 고정한다: BUY=현재 조건에서 구매 고려, WAIT=시기·예산 조정 후 재검토, SKIP=현재 필요성과 활용도상 구매 보류.
-- [ ] 입력을 사실 데이터로 전달하고 제품명 안의 문장을 지시로 해석하지 않도록 요청을 구성한다.
-- [ ] 에어팟, 노트북, 스마트폰, 운동화, 로봇청소기 등 5개 입력 프리셋을 작성한다.
-- [ ] 프리셋 가격은 예시값임을 알린다. 기대 decision/confidence는 고정하지 않는다.
-- [ ] 0원 여유자금, 음수·소수·과도한 금액, 공백 제품명, 잘못된 enum 검증 테스트를 작성한다.
+- [x] 공유 타입·런타임 검증과 한국어 label을 정의했다.
+- [x] 의미를 고정했다: BUY=현재 조건에서 구매 고려, WAIT=시기·예산 조정 후 재검토, SKIP=현재 필요성과 활용도상 구매 보류.
+- [x] 공유 계약은 입력을 값으로만 표현하며 환경변수·서버 어댑터·요청 생성 코드를 포함하지 않는다. 실제 API 요청 구성은 03에서 구현한다.
+- [x] 에어팟, 노트북, 스마트폰, 운동화, 로봇청소기 입력 프리셋 5개를 작성했다.
+- [x] 프리셋은 label과 입력값만 포함한다. decision/confidence/probabilities를 고정하지 않는다.
+- [x] 0원 여유자금, 음수·소수·과도한 금액, 공백·누락 제품명, 문자열 숫자·null과 잘못된 enum을 검증하는 테스트를 작성했다.
+- [x] 출력 검증에서 confidence와 probabilities의 0/1 경계값, NaN·무한대·범위 밖 값, 분포 누락·null·키 누락, 합계 허용 오차 안팎을 확인했다. 성공 시 원래 confidence와 세 확률값이 보존된다.
 
 ### 완료 기준
-UI와 API가 같은 계약을 사용하며 프리셋 모두 검증을 통과한다.
+UI와 API가 confidence와 probabilities를 구분한 같은 계약을 사용하며 프리셋 모두 검증을 통과한다. 출력의 필수 필드·숫자 범위·분포 합계 검증을 통과하고 누락값 생성이나 재정규화가 없어야 한다.
 
 ### 작업 결과
-실행 시 기록.
+- `npm test`에서 37개 계약·프리셋 테스트가 통과했다.
+- `npm run typecheck`, `npm run lint`, `npm run build`가 통과했다.
+- API route와 UI는 다음 단계에서 이 공유 계약을 사용한다. 이 단계의 계약·프리셋은 독립 리뷰 PASS.
 
 ## 03. 서버 API와 Jev 연결
 상태: TODO
