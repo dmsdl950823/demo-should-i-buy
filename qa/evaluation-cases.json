@@ -1,0 +1,26 @@
+{
+  "purpose": "사전에 정한 MVP 구매 판단 기준과 Jev 결과의 일치·반복 일관성 점검. 객관적 구매 정답률이 아님.",
+  "repeatIds": ["N1", "P2", "R1", "T1", "S3"],
+  "cases": [
+    {"id":"N1","input":{"productName":"업무용 노트북","price":900000,"disposableIncome":1500000,"currentProductStatus":"none","usageFrequency":"daily","necessity":"high"},"allowed":["BUY"]},
+    {"id":"N2","input":{"productName":"업무용 노트북","price":1800000,"disposableIncome":1500000,"currentProductStatus":"none","usageFrequency":"daily","necessity":"high"},"allowed":["WAIT"]},
+    {"id":"N3","input":{"productName":"업무용 노트북","price":900000,"disposableIncome":600000,"currentProductStatus":"none","usageFrequency":"daily","necessity":"high"},"allowed":["WAIT"]},
+    {"id":"N4","input":{"productName":"업무용 노트북","price":900000,"disposableIncome":1500000,"currentProductStatus":"none","usageFrequency":"daily","necessity":"medium"},"allowed":["BUY","WAIT"]},
+    {"id":"P1","input":{"productName":"스마트폰","price":700000,"disposableIncome":1000000,"currentProductStatus":"old","usageFrequency":"daily","necessity":"medium"},"allowed":["BUY","WAIT"]},
+    {"id":"P2","input":{"productName":"스마트폰","price":1500000,"disposableIncome":1000000,"currentProductStatus":"old","usageFrequency":"daily","necessity":"medium"},"allowed":["WAIT"]},
+    {"id":"P3","input":{"productName":"스마트폰","price":700000,"disposableIncome":100000,"currentProductStatus":"old","usageFrequency":"daily","necessity":"medium"},"allowed":["WAIT"]},
+    {"id":"P4","input":{"productName":"스마트폰","price":700000,"disposableIncome":1000000,"currentProductStatus":"old","usageFrequency":"daily","necessity":"low"},"allowed":["WAIT","SKIP"]},
+    {"id":"R1","input":{"productName":"로봇청소기","price":500000,"disposableIncome":800000,"currentProductStatus":"none","usageFrequency":"often","necessity":"medium"},"allowed":["BUY","WAIT"]},
+    {"id":"R2","input":{"productName":"로봇청소기","price":1200000,"disposableIncome":800000,"currentProductStatus":"none","usageFrequency":"often","necessity":"medium"},"allowed":["WAIT","SKIP"]},
+    {"id":"R3","input":{"productName":"로봇청소기","price":500000,"disposableIncome":100000,"currentProductStatus":"none","usageFrequency":"often","necessity":"medium"},"allowed":["WAIT","SKIP"]},
+    {"id":"R4","input":{"productName":"로봇청소기","price":500000,"disposableIncome":800000,"currentProductStatus":"none","usageFrequency":"often","necessity":"low"},"allowed":["WAIT","SKIP"]},
+    {"id":"T1","input":{"productName":"추가 태블릿","price":800000,"disposableIncome":2000000,"currentProductStatus":"working","usageFrequency":"rarely","necessity":"low"},"allowed":["SKIP"]},
+    {"id":"T2","input":{"productName":"추가 태블릿","price":200000,"disposableIncome":2000000,"currentProductStatus":"working","usageFrequency":"rarely","necessity":"low"},"allowed":["SKIP"]},
+    {"id":"T3","input":{"productName":"추가 태블릿","price":800000,"disposableIncome":100000,"currentProductStatus":"working","usageFrequency":"rarely","necessity":"low"},"allowed":["SKIP"]},
+    {"id":"T4","input":{"productName":"추가 태블릿","price":800000,"disposableIncome":2000000,"currentProductStatus":"working","usageFrequency":"sometimes","necessity":"low"},"allowed":["SKIP","WAIT"]},
+    {"id":"S1","input":{"productName":"일상용 운동화","price":120000,"disposableIncome":300000,"currentProductStatus":"broken","usageFrequency":"daily","necessity":"high"},"allowed":["BUY"]},
+    {"id":"S2","input":{"productName":"일상용 운동화","price":400000,"disposableIncome":300000,"currentProductStatus":"broken","usageFrequency":"daily","necessity":"high"},"allowed":["WAIT"]},
+    {"id":"S3","input":{"productName":"일상용 운동화","price":120000,"disposableIncome":0,"currentProductStatus":"broken","usageFrequency":"daily","necessity":"high"},"allowed":["WAIT"]},
+    {"id":"S4","input":{"productName":"일상용 운동화","price":120000,"disposableIncome":300000,"currentProductStatus":"broken","usageFrequency":"daily","necessity":"medium"},"allowed":["BUY","WAIT"]}
+  ]
+}

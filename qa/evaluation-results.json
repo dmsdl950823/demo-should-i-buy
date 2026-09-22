@@ -1,0 +1,391 @@
+{
+  "evaluatedAt": "2026-09-22T14:18:32.013Z",
+  "endpoint": "local Next route",
+  "results": [
+    {
+      "id": "N1",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "BUY"
+      ],
+      "decision": "BUY",
+      "confidence": 0.99,
+      "probabilities": {
+        "BUY": 1,
+        "WAIT": 0,
+        "SKIP": 0
+      }
+    },
+    {
+      "id": "N2",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.71,
+      "probabilities": {
+        "BUY": 0.19,
+        "WAIT": 0.8,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "N3",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.77,
+      "probabilities": {
+        "BUY": 0.14,
+        "WAIT": 0.85,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "N4",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "BUY",
+        "WAIT"
+      ],
+      "decision": "BUY",
+      "confidence": 0.67,
+      "probabilities": {
+        "BUY": 0.78,
+        "WAIT": 0.21,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "P1",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "BUY",
+        "WAIT"
+      ],
+      "decision": "BUY",
+      "confidence": 0.66,
+      "probabilities": {
+        "BUY": 0.77,
+        "WAIT": 0.19,
+        "SKIP": 0.04
+      }
+    },
+    {
+      "id": "P2",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.8,
+      "probabilities": {
+        "BUY": 0.06,
+        "WAIT": 0.87,
+        "SKIP": 0.07
+      }
+    },
+    {
+      "id": "P3",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.79,
+      "probabilities": {
+        "BUY": 0.05,
+        "WAIT": 0.86,
+        "SKIP": 0.09
+      }
+    },
+    {
+      "id": "P4",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT",
+        "SKIP"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.68,
+      "probabilities": {
+        "BUY": 0.04,
+        "WAIT": 0.17,
+        "SKIP": 0.79
+      }
+    },
+    {
+      "id": "R1",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "BUY",
+        "WAIT"
+      ],
+      "decision": "BUY",
+      "confidence": 0.61,
+      "probabilities": {
+        "BUY": 0.74,
+        "WAIT": 0.25,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "R2",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT",
+        "SKIP"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.88,
+      "probabilities": {
+        "BUY": 0.05,
+        "WAIT": 0.92,
+        "SKIP": 0.03
+      }
+    },
+    {
+      "id": "R3",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT",
+        "SKIP"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.9,
+      "probabilities": {
+        "BUY": 0.05,
+        "WAIT": 0.9299999999999999,
+        "SKIP": 0.02
+      }
+    },
+    {
+      "id": "R4",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT",
+        "SKIP"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.36,
+      "probabilities": {
+        "BUY": 0.01,
+        "WAIT": 0.41,
+        "SKIP": 0.58
+      }
+    },
+    {
+      "id": "T1",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "SKIP"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.99,
+      "probabilities": {
+        "BUY": 0,
+        "WAIT": 0.01,
+        "SKIP": 0.99
+      }
+    },
+    {
+      "id": "T2",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "SKIP"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.99,
+      "probabilities": {
+        "BUY": 0,
+        "WAIT": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": "T3",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "SKIP"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.98,
+      "probabilities": {
+        "BUY": 0,
+        "WAIT": 0.01,
+        "SKIP": 0.99
+      }
+    },
+    {
+      "id": "T4",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "SKIP",
+        "WAIT"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.96,
+      "probabilities": {
+        "BUY": 0,
+        "WAIT": 0.02,
+        "SKIP": 0.98
+      }
+    },
+    {
+      "id": "S1",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "BUY"
+      ],
+      "decision": "BUY",
+      "confidence": 1,
+      "probabilities": {
+        "BUY": 1,
+        "WAIT": 0,
+        "SKIP": 0
+      }
+    },
+    {
+      "id": "S2",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "BUY",
+      "confidence": 0.25,
+      "probabilities": {
+        "BUY": 0.5,
+        "WAIT": 0.49,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "S3",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.88,
+      "probabilities": {
+        "BUY": 0.08,
+        "WAIT": 0.91,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "S4",
+      "repeat": false,
+      "ok": true,
+      "allowed": [
+        "BUY",
+        "WAIT"
+      ],
+      "decision": "BUY",
+      "confidence": 0.97,
+      "probabilities": {
+        "BUY": 0.98,
+        "WAIT": 0.02,
+        "SKIP": 0
+      }
+    },
+    {
+      "id": "N1",
+      "repeat": true,
+      "ok": true,
+      "allowed": [
+        "BUY"
+      ],
+      "decision": "BUY",
+      "confidence": 1,
+      "probabilities": {
+        "BUY": 1,
+        "WAIT": 0,
+        "SKIP": 0
+      }
+    },
+    {
+      "id": "P2",
+      "repeat": true,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.84,
+      "probabilities": {
+        "BUY": 0.06,
+        "WAIT": 0.89,
+        "SKIP": 0.05
+      }
+    },
+    {
+      "id": "R1",
+      "repeat": true,
+      "ok": true,
+      "allowed": [
+        "BUY",
+        "WAIT"
+      ],
+      "decision": "BUY",
+      "confidence": 0.61,
+      "probabilities": {
+        "BUY": 0.74,
+        "WAIT": 0.25,
+        "SKIP": 0.01
+      }
+    },
+    {
+      "id": "T1",
+      "repeat": true,
+      "ok": true,
+      "allowed": [
+        "SKIP"
+      ],
+      "decision": "SKIP",
+      "confidence": 0.99,
+      "probabilities": {
+        "BUY": 0,
+        "WAIT": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": "S3",
+      "repeat": true,
+      "ok": true,
+      "allowed": [
+        "WAIT"
+      ],
+      "decision": "WAIT",
+      "confidence": 0.85,
+      "probabilities": {
+        "BUY": 0.09,
+        "WAIT": 0.9,
+        "SKIP": 0.01
+      }
+    }
+  ]
+}

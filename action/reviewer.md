@@ -126,6 +126,12 @@ Builder 검증 근거: Vitest 37개, typecheck, lint, build 통과. 계약은 co
 
 최종 판정: **PASS**. 확인한 보조 텍스트 최소 대비 4.53:1, 로딩 문구 4.99:1. 55개 테스트와 `git diff --check`를 독립 확인했고 Builder의 lint, typecheck, build 성공을 확인했다. 메인은 프로덕션 화면에서 예시 입력→실제 Jev WAIT 결과, 별도 confidence와 실제 확률, 6개 조건 요약, 입력 변경 시 이전 결과 제거를 확인했다. 단일 열 모바일 구성과 SVG·클라이언트 비밀값 부재를 확인했다.
 
+### 05-integration-and-qa (2026-09-22)
+
+범위: `qa/evaluation-cases.json`, `scripts/evaluate-jev.mjs`, `qa/evaluation-results.json`, `qa/evaluation-report.md`, 기존 앱/route 통합.
+
+판정: **PASS**. 독립 Reviewer가 20개 고유 조건·5개 반복, 허용 선택지의 모델 입력 제외, 25/25 유효 응답, 19/20 사전 기준 일치, 5/5 반복 동일 선택, 최대 confidence 차이 0.04·개별 확률 차이 0.02를 재계산했다. 불일치는 S2 한 건으로 기록했고 기준을 사후 수정하지 않았다. `npm test` 55개, typecheck, lint, diff 검사는 독립 통과했다. Reviewer 환경의 build는 `.next/trace-build` 쓰기 제한으로 미실행이지만 메인의 production build는 성공했고 `/api/decision`을 동적 route로 포함했다. 실제 키는 client static 파일 11개에서 발견되지 않았고 `.env.local`은 git 비추적이다. 소규모 주관적 기준 일치를 객관적 정확도로 확대 해석하지 않는다.
+
 발견 사항은 `ID / 중요도 / 파일·라인 / 재현 조건 / 영향 / 권장 수정` 형식으로 작성한다. 수정 후에는 해당 ID의 해결 여부와 재검증 근거를 남긴다.
 
 단계별 완료 커밋이 해당 작업만 포함하는지, 비밀 파일과 다른 단계의 미완료 변경이 섞이지 않았는지도 확인한다.
